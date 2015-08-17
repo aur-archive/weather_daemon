@@ -1,0 +1,25 @@
+post_install() {    
+    echo
+    echo "Create /etc/weather_daemon.conf file (see the example /etc/weather_daemon_example.conf)"
+    echo
+
+	# Fixing membership
+	
+	chown weather_daemon: "/etc/weather_daemon_example.conf"
+    chown weather_daemon: "/var/log/weather_daemon"
+    
+	true
+}
+
+post_upgrade() {
+	chown weather_daemon: "/etc/weather_daemon_example.conf"
+    chown weather_daemon: "/var/log/weather_daemon"
+    
+    true
+}
+
+post_remove() {
+	getent passwd weather_daemon &>/dev/null && userdel weather_daemon >/dev/null
+	getent group weather_daemon &>/dev/null && groupdel weather_daemon >/dev/null
+	true
+}
